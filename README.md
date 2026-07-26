@@ -51,6 +51,7 @@ Diferente de abordagens tradicionais baseadas apenas em regras imperativas lenta
 [ Dashboard Frontend em Tempo Real ]
 
 🛠️ Tecnologias Utilizadas
+
 Linguagem Backend: Rust (Edição 2021)
 Runtime Assíncrono: tokio
 Comunicação gRPC: tonic / prost (Protocol Buffers)
@@ -58,7 +59,9 @@ Motor de Lógica Formal: z3 (SMT Solver - Bit-vectors, Arith, Arrays)
 Servidor Web / WebSocket: axum / tokio-tungstenite
 Métricas e Telemetria: prometheus
 Interface/Dashboard: React / Tailwind CSS / WebSockets
+
 ⚙️ Como Executar o Projeto Localmente
+
 Pré-requisitos
 Rust & Cargo (versão mais recente)
 Clang / LLVM e suporte à biblioteca do Z3 (libz3-dev)
@@ -79,11 +82,15 @@ Prometheus Metrics: http://0.0.0.0:9090/metrics
 Em outro terminal, execute o script de simulação:
 chmod +x simular_banco.sh
 ./simular_banco.sh
+
 📡 Portas e Endpoints
+
 ServiçoProtocoloEndereço / PortaDescrição
 Ingestão gRPCHTTP/2 (gRPC)0.0.0.0:50051Avaliação de transações síncronas
 Realtime StreamWebSocketws://0.0.0.0:8080Streaming de eventos para a dashboard
 TelemetriaHTTP0.0.0.0:9090/metricsMétricas de tempo de resposta e vazão
+
 📝 Licença
+
 Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
 Developed by **Eduardo Oliveira** — [GitHub](https://github.com/eduardoolivera142345-byte)
