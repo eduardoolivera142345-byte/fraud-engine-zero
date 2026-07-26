@@ -1,0 +1,28 @@
+syntax = "proto3";
+package fraud.engine.v1;
+
+message TransactionRequest {
+  string transaction_id = 1;
+  string account_origin = 2;
+  string account_destination = 3;
+  double amount = 4;
+  string device_id = 5;
+  string ip_address = 6;
+  int64 timestamp_ms = 7;
+}
+
+message TransactionResponse {
+  string transaction_id = 1;
+  enum Decision {
+    APPROVED = 0;
+    REJECTED = 1;
+    CHALLENGE_BIOMETRICS = 2;
+  }
+  Decision decision = 2;
+  float risk_score = 3;
+  int64 execution_time_us = 4;
+}
+
+service FraudEngineService {
+  rpc EvaluateTransaction (TransactionRequest) returns (TransactionResponse);
+}
