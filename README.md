@@ -6,7 +6,7 @@
 
 ## 📽️ Demonstração em Tempo Real
 
-🎬 **[Clique aqui para assistir à demonstração em tempo real no Streamable](https://streamable.com/4pzz49)**
+🎬 **[Clique aqui para assistir à demonstração em tempo real no Streamable](https://streamable.com/0natb6)**
 
 
 > **Destaque do Teste:** Simulação operacional recebendo transações via ingestão gRPC, validando regras de risco no motor Rust/Z3 e transmitindo métricas e eventos ao vivo para a dashboard via WebSocket com latência sub-milissegundo.
