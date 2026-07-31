@@ -7,7 +7,7 @@ Fast, deterministic transaction fraud detection engine built in Rust. It uses th
 ## Demo
 
 Watch the operational demo on Streamable:
-👉 **[Watch Video Demo](https://streamable.com/4pzz...)**
+👉 **[Watch Video Demo](https://streamable.com/4pzz49)**
 
 *Highlights:* Receiving transactions over gRPC, running risk validation against Rust/Z3 rules, and streaming live metrics to the dashboard via WebSockets with sub-millisecond overhead.
 
