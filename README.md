@@ -1,96 +1,85 @@
-# 🛡️ Fraud Engine Zero — Motor Anti-Fraude em Tempo Real
+# Fraud Engine Zero
 
-> Motor de avaliação e prevenção a fraudes transacionais de ultra-baixa latência, construído em **Rust**, utilizando verificação formal de regras com **Z3 SMT Solver**, ingestão via **gRPC** e streaming de eventos em tempo real via **WebSockets**.
-
----
-
-## 📽️ Demonstração em Tempo Real
-
-🎬 **[Clique aqui para assistir à demonstração em tempo real no Streamable](https://streamable.com/0natb6)**
-
-
-> **Destaque do Teste:** Simulação operacional recebendo transações via ingestão gRPC, validando regras de risco no motor Rust/Z3 e transmitindo métricas e eventos ao vivo para a dashboard via WebSocket com latência sub-milissegundo.
+Fast, deterministic transaction fraud detection engine built in Rust. It uses the **Z3 SMT solver** for formal rule verification, **gRPC** for low-latency ingestion, and **WebSockets** for real-time dashboard streaming.
 
 ---
 
-## 🎯 Sobre o Projeto
+## Demo
 
-O **Fraud Engine Zero** foi desenvolvido para resolver o desafio de análise de risco e detecção de fraudes em ambientes bancários e de meios de pagamento de altíssimo volume. 
+Watch the operational demo on Streamable:
+👉 **[Watch Video Demo](https://streamable.com/4pzz...)**
 
-Diferente de abordagens tradicionais baseadas apenas em regras imperativas lentas, o motor combina **verificação lógica formal (SMT Solver)** com a performance bruta e segurança de memória do **Rust**, garantindo tomadas de decisão determinísticas em microssegundos ($\mu s$).
-
-### 🚀 Principais Diferenciais Técnicos:
-- **Latência Sub-milissegundo ($\mu s$):** Processamento assíncrono paralelo alimentado pelo runtime `Tokio`.
-- **Lógica Formal Garantida (Z3 SMT):** Validação matemática de restrições de fraude (evita falsos positivos e conflitos entre regras).
-- **Ingestão gRPC de Alto Desempenho:** Comunicação binária para comunicação eficiente entre microsserviços/bancos parceiros.
-- **Painel Telemétrico via WebSocket:** Streaming bidirecional para monitoramento em tempo real sem necessidade de *polling*.
-- **Observabilidade Pronta para Produção:** Exportador de métricas no padrão Prometheus.
+*Highlights:* Receiving transactions over gRPC, running risk validation against Rust/Z3 rules, and streaming live metrics to the dashboard via WebSockets with sub-millisecond overhead.
 
 ---
 
-## 🏗️ Arquitetura do Sistema
+## Why this exists
+
+Imperative rule engines often get messy as rule sets grow, leading to rule conflicts and silent edge-case bugs. 
+
+**Fraud Engine Zero** handles fraud detection by treating rule evaluation as a formal logic problem using an SMT Solver (Z3). Combined with Rust's memory safety and async execution model, it yields deterministic decisions at microsecond scale ($\mu s$) without trade-offs in correctness.
+
+---
+
+## Tech Specs
+
+* **Sub-millisecond decisions:** Built on `tokio` for non-blocking concurrent throughput.
+* **Formal logic constraints:** Powered by `z3` (SMT solver) to prevent false positives and conflicting rule logic.
+* **gRPC Ingestion:** Low-overhead binary transport via `tonic` / Protocol Buffers.
+* **Live Streaming:** Real-time state push to the dashboard using WebSockets (`axum` + `tokio-tungstenite`).
+* **Telemetry:** Native Prometheus exporter (`/metrics`).
+
+---
+
+## System Overview
 
 ```text
-[ Simulador de Banco ] 
-         │ (gRPC / Protocol Buffers)
-         ▼
-┌────────────────────────────────────────────────────────┐
-│               RUST FRAUD ENGINE ZERO                   │
-│                                                        │
-│  ┌──────────────────┐       ┌───────────────────────┐  │
-│  │ Tokio Async Core │ ────> │ Z3 SMT Solver (Lógica)│  │
-│  └──────────────────┘       └───────────────────────┘  │
-│           │                             │              │
-│           ▼                             ▼              │
-│  ┌──────────────────┐       ┌───────────────────────┐  │
-│  │ Audit Logger     │       │ Prometheus Metrics    │  │
-│  └──────────────────┘       └───────────────────────┘  │
-└────────────────────────────────────────────────────────┘
-         │ (WebSockets / JSON Stream)
-         ▼
-[ Dashboard Frontend em Tempo Real ]
+[ Bank / Payment Service ]
+          │ (gRPC)
+          ▼
+┌─────────────────────────────────────────┐
+│        Fraud Engine Zero (Rust)         │
+│                                         │
+│   Tokio Runtime ───► Z3 Logic Solver    │
+│         │                  │            │
+│         ▼                  ▼            │
+│   Audit Logs        Prometheus Metrics  │
+└─────────────────────────────────────────┘
+          │
+          │ (WebSockets)
+          ▼
+[ Real-Time Frontend ]
 
-🛠️ Tecnologias Utilizadas
+Stack
+Language: Rust (2021 edition)
+Async Core: Tokio
+gRPC: tonic / prost
+SMT Engine: z3
+Web Server: axum
+Metrics: Prometheus
+Frontend: React + Tailwind CSS
+Quickstart
+Prerequisites
+Rust toolchain (stable)
+C++ compiler (clang/gcc), protobuf-compiler, and z3 development headers installed on your system.
+Build and Run
 
-Linguagem Backend: Rust (Edição 2021)
-Runtime Assíncrono: tokio
-Comunicação gRPC: tonic / prost (Protocol Buffers)
-Motor de Lógica Formal: z3 (SMT Solver - Bit-vectors, Arith, Arrays)
-Servidor Web / WebSocket: axum / tokio-tungstenite
-Métricas e Telemetria: prometheus
-Interface/Dashboard: React / Tailwind CSS / WebSockets
+1 Clone repo:
 
-⚙️ Como Executar o Projeto Localmente
-
-Pré-requisitos
-Rust & Cargo (versão mais recente)
-Clang / LLVM e suporte à biblioteca do Z3 (libz3-dev)
-Protobuf Compiler (protobuf-compiler)
-1. Clonar o Repositório
-2.git clone https://github.com/eduardoolivera142345-byte/fraud-engine-zero.git
+git clone [https://github.com/eduardoolivera142345-byte/fraud-engine-zero](https://github.com/eduardoolivera142345-byte/fraud-engine-zero)
 cd fraud-engine-zero
-2. Compilar em Modo de Alta Performance (Release)
+
+2 Build optimized release binary:
+
 cargo build --release
-3. Executar o Motor Anti-Fraude
+
+3 Run:
+
 cargo run --release
 
-O motor iniciará os serviços nas seguintes portas:
-gRPC: 0.0.0.0:50051
-WebSocket: ws://0.0.0.0:8080
-Prometheus Metrics: http://0.0.0.0:9090/metrics
-4. Simular Carga Transacional
-Em outro terminal, execute o script de simulação:
-chmod +x simular_banco.sh
-./simular_banco.sh
-
-📡 Portas e Endpoints
-
-ServiçoProtocoloEndereço / PortaDescrição
-Ingestão gRPCHTTP/2 (gRPC)0.0.0.0:50051Avaliação de transações síncronas
-Realtime StreamWebSocketws://0.0.0.0:8080Streaming de eventos para a dashboard
-TelemetriaHTTP0.0.0.0:9090/metricsMétricas de tempo de resposta e vazão
-
-📝 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
-Developed by **Eduardo Oliveira** — [GitHub](https://github.com/eduardoolivera142345-byte)
+Default services ports:
+gRPC Server: 0.0.0.0:50051
+WebSocket Server: 0.0.0.0:8080
+Prometheus Metrics: 0.0.0.0:9090/metrics
+License
+MIT License. Created by Eduardo Oliveira.
