@@ -58,16 +58,21 @@ SMT Engine: z3
 Web Server: axum
 Metrics: Prometheus
 Frontend: React + Tailwind CSS
-Quickstart
-Prerequisites
-Rust toolchain (stable)
-C++ compiler (clang/gcc), protobuf-compiler, and z3 development headers installed on your system.
-Build and Run
 
-1 Clone repo:
+## Quickstart
 
-git clone [https://github.com/eduardoolivera142345-byte/fraud-engine-zero](https://github.com/eduardoolivera142345-byte/fraud-engine-zero)
+### Prerequisites
+* Rust toolchain (stable)
+* C++ compiler (`clang`/`gcc`), `protobuf-compiler`, and `z3` development headers installed.
+
+### Build and Run
+
+1. Clone repo:
+```bash
+git clone https://github.com/eduardoolivera142345-byte/fraud-engine-zero
 cd fraud-engine-zero
+
+
 
 2 Build optimized release binary:
 
@@ -78,8 +83,10 @@ cargo build --release
 cargo run --release
 
 Default services ports:
+
 gRPC Server: 0.0.0.0:50051
 WebSocket Server: 0.0.0.0:8080
 Prometheus Metrics: 0.0.0.0:9090/metrics
 License
+
 MIT License. Created by Eduardo Oliveira.
